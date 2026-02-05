@@ -27,26 +27,33 @@
                         </div>
                     @endif
 
-                    {{-- <form method="POST"
-                          action="{{ route('courses.enroll', $course) }}">
-                        @csrf
-                        <button class="btn btn-primary w-100 mt-3">
-                            Enroll Now
-                        </button>
-                    </form> --}}
-
-
                     @if(auth()->check())
-    <a href="{{ route('courses.learn', $course) }}"
-       class="btn btn-success w-100 mt-3">
-        Start Learning
-    </a>
-@else
-    <a href="{{ route('login') }}"
-       class="btn btn-primary w-100 mt-3">
-        Login to Enroll
-    </a>
-@endif
+                        @php
+                            $isEnrolled = \App\Models\Enrollment::where('user_id', auth()->id())
+                                ->where('course_id', $course->id)
+                                ->exists();
+                        @endphp
+
+                        @if($isEnrolled)
+                            <a href="{{ route('courses.learn', $course) }}"
+                            class="btn btn-success w-100 mt-3">
+                                Start Learning
+                            </a>
+                        @else
+                            <form method="POST"
+                                  action="{{ route('courses.enroll', $course) }}">
+                                @csrf
+                                <button class="btn btn-primary w-100 mt-3">
+                                    Enroll Now
+                                </button>
+                            </form>
+                        @endif
+                    @else
+                        <a href="{{ route('login') }}"
+                        class="btn btn-primary w-100 mt-3">
+                            Login to Enroll
+                        </a>
+                    @endif
 
 
 

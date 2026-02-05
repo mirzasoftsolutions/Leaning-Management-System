@@ -29,8 +29,12 @@
                     </div>
 
                     <div class="card-footer bg-white">
-                        <a href="{{ route('courses.show', $course) }}"
+                        {{-- <a href="{{ route('courses.show', $course) }}"
                            class="btn btn-outline-primary w-100">
+                            Continue Learning
+                        </a> --}}
+                         <a href="{{ route('courses.learn', $course) }}"
+                        class="btn btn-outline-success w-100 mt-3">
                             Continue Learning
                         </a>
                     </div>
